@@ -13,7 +13,7 @@
     <div class="calendar">
       <h3 class="title">
         岁月留痕
-        <span class="sub-title">——愿我如星君如月，夜夜流光相皎洁</span>
+        <p class="sub-title">愿我如星君如月，夜夜流光相皎洁</p>
       </h3>
       <el-calendar ref="calendar" v-model="pickDate">
         <template #date-cell="{ data }">
@@ -40,7 +40,7 @@
 
     <h3 class="title">
       时光留影
-      <span class="sub-title">——我见青山多妩媚，料青山见我应如是</span>
+      <p class="sub-title">我见青山多妩媚，料青山见我应如是</p>
     </h3>
     <Waterfall :list="recordList" class="waterfall">
       <template #item="{ item, url, index }">
@@ -107,6 +107,15 @@ onMounted(() => {
   const username = ref('')
   const password = ref('')
 
+  const handleEnter = (event, close) => {
+    if (event.key === 'Enter') {
+      const confirmButton = document.querySelector('.el-message-box__btns .el-button--primary')
+      if (confirmButton) {
+        confirmButton.click() // 触发 confirm 按钮的点击事件
+      }
+    }
+  }
+
   const validateLogin = () => {
     if ((username.value === 'xfy' && password.value === '98.06.15') || (username.value === 'xk' && password.value === '97.11.16')) {
       logFlag.value = true
@@ -120,11 +129,11 @@ onMounted(() => {
       // 修改网页图标
       const favicon = document.querySelector('link[rel="icon"]')
       if (favicon) {
-        favicon.href = './love.ico' // 请将这里的路径替换为你想要设置的图标路径
+        favicon.href = './icon.ico'
       } else {
         const link = document.createElement('link')
         link.rel = 'icon'
-        link.href = './love.ico' // 请将这里的路径替换为你想要设置的图标路径
+        link.href = './icon.ico'
         document.head.appendChild(link)
       }
     } else {
@@ -143,6 +152,8 @@ onMounted(() => {
           modelValue: username.value,
           'onUpdate:modelValue': (value) => (username.value = value),
           placeholder: '请输入账号',
+          onKeyup: handleEnter,
+          // onKeyup: (event) => handleEnter(event, done),
         }),
         h(ElInput, {
           type: 'password',
@@ -150,6 +161,7 @@ onMounted(() => {
           'onUpdate:modelValue': (value) => (password.value = value),
           placeholder: '请输入密码',
           style: 'margin-top: 10px',
+          onKeyup: handleEnter,
         }),
       ]),
     showCancelButton: true,
@@ -188,7 +200,7 @@ onMounted(() => {
   }
 
   .sub-title {
-    font-size: 20px;
+    font-size: 18px;
     font-family: "Ma Shan Zheng", cursive;
     text-align: center;
     color: #fff;
