@@ -1,5 +1,15 @@
 <template>
   <div class="home-container" v-show="logFlag">
+
+    <div :class="['music meun-switch animated flex-row', uploadflag ? 'active rubberBand off' : 'leave jello']"
+      @mouseleave="uploadleave" @mouseenter="uploadenter" v-if="uploadShow">
+      <AVCircle src="./miss.mp3" :progress-width="2" :rotate-graph="true" :line-width="2" :bar-width="2"
+        :bar-length="25" :audio-controls="false" />
+    </div>
+    <!-- <div class="music">
+      <AVCircle src="./miss.mp3" :progress-width="2" :rotate-graph="true" :line-width="2" :bar-width="2"
+        :bar-length="25" :audio-controls="false" />
+    </div> -->
     <div class="day">
       <div class="day-now">第 {{ day }} 天</div>
       <div class="day-lover">{{ bridegroom }} <span class="love-text">{{ love }}</span> {{ bride }}</div>
@@ -64,6 +74,8 @@ import { differTime } from '@/utils/ximingx/dayjs'
 import { LazyImg, Waterfall } from 'vue-waterfall-plugin-next'
 import 'vue-waterfall-plugin-next/dist/style.css'
 // import WebsiteFiling from '@/components/WebsiteFiling/WebsiteFiling.vue'
+import { AVCircle } from 'vue-audio-visual'
+
 document.title = '你好呀！'
 
 const homeStore = useHome()
@@ -103,7 +115,31 @@ const selectDate = (type) => {
 import { ElMessageBox, ElInput, ElMessage } from 'element-plus'
 const logFlag = ref(false)
 
+const uploadflag = ref(true);
+const uploadShow = ref(true);
+
+const uploadenter = () => {
+  uploadflag.value = true;
+};
+
+const uploadleave = () => {
+  uploadflag.value = false;
+};
+
 onMounted(() => {
+  const audio = document.querySelector('.music audio')
+  audio.setAttribute('loop', 'loop');
+
+  const audioCanvas = document.querySelector('.music canvas')
+  audioCanvas.addEventListener('click', function () {
+    // 检查音频当前是否在播放
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  });
+
   const username = ref('')
   const password = ref('')
 
@@ -117,7 +153,7 @@ onMounted(() => {
   }
 
   const validateLogin = () => {
-    if ((username.value === 'xfy' && password.value === '98.06.15') || (username.value === 'xk' && password.value === '97.11.16')) {
+    if ((username.value === 'xfy' && password.value === '99.06.15') || (username.value === 'xk' && password.value === '97.11.16')) {
       logFlag.value = true
       ElMessage({
         message: '宝宝，终于等到你啦！(づ￣ ³￣)づ ',
@@ -136,6 +172,7 @@ onMounted(() => {
         link.href = './icon.ico'
         document.head.appendChild(link)
       }
+      audio.play();
     } else {
       ElMessage({
         message: '账号或密码错误哦！( ̄へ ̄)',
@@ -312,6 +349,90 @@ onMounted(() => {
 
   ::v-deep(.el-button--small) {
     font-size: 18px;
+  }
+
+  .off {
+    -webkit-animation: 0.8s seconddiv;
+    animation: 0.8s seconddiv;
+    background: transparent;
+  }
+
+  /* @keyframes seconddiv {
+    0% {
+        transform: scale(1.4, 1.4);
+    }
+
+    10% {
+        transform: scale(1, 1);
+    }
+
+    25% {
+        transform: scale(1.2, 1.2);
+    }
+
+    50% {
+        transform: scale(1, 1);
+    }
+
+    70% {
+        transform: scale(1.2, 1.2);
+    }
+
+    100% {
+        transform: scale(1, 1);
+    }
+} */
+
+  @keyframes seconddiv {
+    0% {
+      transform: scale(1, 1);
+    }
+
+    10% {
+      transform: scale(1.1, 1.1);
+    }
+
+    25% {
+      transform: scale(1.2, 1.2);
+    }
+
+    50% {
+      transform: scale(1, 1);
+    }
+
+    75% {
+      transform: scale(1.2, 1.2);
+    }
+
+    100% {
+      transform: scale(1.1, 1.1);
+    }
+  }
+
+  .meun-switch {
+    position: fixed;
+    top: 60px;
+    left: 0px;
+    z-index: 2001;
+    cursor: pointer;
+    // width: 90px;
+    /* height: 150px; */
+    padding: 5px;
+    transition: all 0.2s;
+
+    &.leave {
+      left: -50px;
+      transition: left 0.8s 0.2s;
+      /* 设置离开的动画延迟时间为 1s，持续时间为 0.2s */
+    }
+
+    &.active {
+      left: 0;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }
 </style>

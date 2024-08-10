@@ -1,4 +1,3 @@
-const { ref } = require("vue");
 module.exports = {
   day: "2023-07-15 09:00:00",
   // 男方信息
@@ -106,6 +105,31 @@ module.exports = {
       desc: "",
     },
     {
+      src: require("@/assets/image5.png"),
+      time: "2021-07-13 15:20:00",
+      desc: "",
+    },
+    {
+      src: require("@/assets/image7.png"),
+      time: "2021-07-13 15:20:00",
+      desc: "",
+    },
+    {
+      src: require("@/assets/image8.png"),
+      time: "2021-07-13 15:20:00",
+      desc: "",
+    },
+    {
+      src: require("@/assets/image9.png"),
+      time: "2021-07-13 15:20:00",
+      desc: "",
+    },
+    {
+      src: require("@/assets/image6.png"),
+      time: "2021-07-13 15:20:00",
+      desc: "hhh, 风怡宝宝与火柴人的合照",
+    },
+    {
       src: require("@/assets/1723230900355.jpg"),
       time: "2021-07-13 15:20:00",
       desc: "认真答辩 ( ̄▽ ̄)",
@@ -148,7 +172,7 @@ module.exports = {
     {
       src: require("@/assets/1723230900444.jpg"),
       time: "2021-07-13 15:20:00",
-      desc: "超级漂亮的屏保",
+      desc: "超级漂亮的聊天背景",
     },
     {
       src: require("@/assets/image4.png"),
@@ -163,7 +187,7 @@ module.exports = {
     {
       src: require("@/assets/1723230900463.jpg"),
       time: "2021-07-13 15:20:00",
-      desc: "曾经的屏保，hhh",
+      desc: "曾经的聊天背景，hhh",
     },
     {
       src: require("@/assets/1723230900476.jpg"),
@@ -243,7 +267,7 @@ module.exports = {
     {
       src: require("@/assets/1723230900632.jpg"),
       time: "2021-07-13 15:20:00",
-      desc: "见识到了啥是颂钵，也是曾经的屏保",
+      desc: "见识到了啥是颂钵，也是曾经的聊天背景",
     },
     {
       src: require("@/assets/1723230900643.jpg"),

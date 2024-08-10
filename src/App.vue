@@ -20,4 +20,14 @@
 .el-calendar-day {
   overflow: scroll;
 }
+
+.music {
+  // position: absolute;
+  // top: 10px;
+  // left: 10px;
+
+  canvas {
+    cursor: pointer;
+  }
+}
 </style>

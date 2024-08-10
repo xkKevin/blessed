@@ -6,4 +6,6 @@ import pinia from "./store";
 import "normalize.css/normalize.css";
 import "element-plus/dist/index.css";
 
-createApp(App).use(pinia).use(router).mount("#app");
+import { AVPlugin } from "vue-audio-visual";
+
+createApp(App).use(pinia).use(router).use(AVPlugin).mount("#app");
