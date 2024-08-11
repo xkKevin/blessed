@@ -62,7 +62,7 @@
       </template>
     </Waterfall>
 
-    <!-- <WebsiteFiling></WebsiteFiling> -->
+    <WebsiteFiling></WebsiteFiling>
 
   </div>
 </template>
@@ -73,7 +73,7 @@ import { useHome } from '@/store/home'
 import { differTime } from '@/utils/ximingx/dayjs'
 import { LazyImg, Waterfall } from 'vue-waterfall-plugin-next'
 import 'vue-waterfall-plugin-next/dist/style.css'
-// import WebsiteFiling from '@/components/WebsiteFiling/WebsiteFiling.vue'
+import WebsiteFiling from '@/components/WebsiteFiling/WebsiteFiling.vue'
 import { AVCircle } from 'vue-audio-visual'
 
 document.title = '你好呀！'
@@ -126,8 +126,28 @@ const uploadleave = () => {
   uploadflag.value = false;
 };
 
+let openElMessageBox, audio;
+let isElMessageBoxOpen = false;
+
+const handleKeydown = (event) => {
+  if (event.key === ' ') {
+    if (logFlag.value) {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    } else if (!isElMessageBoxOpen) {
+      openElMessageBox();
+      isElMessageBoxOpen = true;
+    }
+  }
+};
+
 onMounted(() => {
-  const audio = document.querySelector('.music audio')
+  document.addEventListener('keydown', handleKeydown);
+
+  audio = document.querySelector('.music audio')
   audio.setAttribute('loop', 'loop');
 
   const audioCanvas = document.querySelector('.music canvas')
@@ -139,6 +159,7 @@ onMounted(() => {
       audio.pause();
     }
   });
+
 
   const username = ref('')
   const password = ref('')
@@ -181,40 +202,46 @@ onMounted(() => {
     }
   }
 
-  ElMessageBox({
-    title: '需要先登录哦',
-    message: () =>
-      h('div', [
-        h(ElInput, {
-          modelValue: username.value,
-          'onUpdate:modelValue': (value) => (username.value = value),
-          placeholder: '请输入账号',
-          onKeyup: handleEnter,
-          // onKeyup: (event) => handleEnter(event, done),
-        }),
-        h(ElInput, {
-          type: 'password',
-          modelValue: password.value,
-          'onUpdate:modelValue': (value) => (password.value = value),
-          placeholder: '请输入密码',
-          style: 'margin-top: 10px',
-          onKeyup: handleEnter,
-        }),
-      ]),
-    showCancelButton: true,
-    confirmButtonText: '登录',
-    cancelButtonText: '取消',
-    beforeClose: (action, instance, done) => {
-      if (action === 'confirm') {
-        validateLogin()
-        if (logFlag.value) {
+  openElMessageBox = () => {
+    ElMessageBox({
+      title: '需要先登录哦',
+      message: () =>
+        h('div', [
+          h(ElInput, {
+            modelValue: username.value,
+            'onUpdate:modelValue': (value) => (username.value = value),
+            placeholder: '请输入账号',
+            onKeyup: handleEnter,
+            // onKeyup: (event) => handleEnter(event, done),
+          }),
+          h(ElInput, {
+            type: 'password',
+            modelValue: password.value,
+            'onUpdate:modelValue': (value) => (password.value = value),
+            placeholder: '请输入密码',
+            style: 'margin-top: 10px',
+            onKeyup: handleEnter,
+          }),
+        ]),
+      showCancelButton: true,
+      confirmButtonText: '登录',
+      cancelButtonText: '取消',
+      beforeClose: (action, instance, done) => {
+        if (action === 'confirm') {
+          validateLogin()
+          if (logFlag.value) {
+            done()
+            isElMessageBoxOpen = false;
+          }
+        } else {
           done()
+          isElMessageBoxOpen = false;
         }
-      } else {
-        done()
-      }
-    },
-  })
+      },
+    })
+  }
+  openElMessageBox();
+  isElMessageBoxOpen = true;
 })
 
 </script>
